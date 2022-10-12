@@ -46,12 +46,11 @@ public class TimsoClient extends JFrame implements MouseListener, Runnable {
 		new Thread(this).start();
 		this.setVisible(true);
 	}
-
+    //day la comment cho vui cua nhat hoang
 	public void paint(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-		
 		for (int i = 0; i < dadanh.size(); i++) {
 			int ix = dadanh.get(i).x;
 			int iy = dadanh.get(i).y;
