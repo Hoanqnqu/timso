@@ -16,12 +16,14 @@ import javax.swing.JFrame;
 public class TimsoClient extends JFrame implements MouseListener, Runnable {
 
 	public static void main(String[] args) {
-		new TimsoClient();
+		new TimsoClient("May7","want to join");
 	}
 
 	int n = 5;
 	int s = 100;
 	int os = 50;
+	String name;
+	String keycode;
 	DataInputStream dis;
 	DataOutputStream dos;
 	int matran[][] = new int[n][n];
@@ -30,9 +32,11 @@ public class TimsoClient extends JFrame implements MouseListener, Runnable {
 	Color[] colors = {Color.GREEN, Color.BLUE, Color.CYAN, Color.RED, Color.PINK};
 	int player;
 
-	public TimsoClient() {
+	public TimsoClient(String name, String keycode) {
+		this.name = name;
+		this.keycode = keycode;
 		this.setSize(n * s + 2 * os, n * s + 2 * os);
-		this.setTitle("Caro");
+		this.setTitle("Caro"+this.name);
 		this.setDefaultCloseOperation(3);
 		this.addMouseListener(this);
 
@@ -40,6 +44,8 @@ public class TimsoClient extends JFrame implements MouseListener, Runnable {
 			Socket soc = new Socket("localhost", 5050);
 			dis = new DataInputStream(soc.getInputStream());
 			dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeUTF(this.keycode);
+
 		} catch (Exception e) {
 
 		}

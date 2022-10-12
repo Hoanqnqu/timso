@@ -13,8 +13,6 @@ public class TimSoServer {
 
 	public static void main(String[] args) {
 		new TimSoServer();
-
-
 	}
 
 	int n = 5;
@@ -24,6 +22,7 @@ public class TimSoServer {
 	List<Point> dadanh = new ArrayList<Point>();
 	List<Integer> playerClicks = new ArrayList<>();
 	String number = "";
+	int players = 0;
 
 	public TimSoServer() {
 		ServerSocket theServer;
@@ -75,6 +74,8 @@ class Xuly extends Thread {
 	public void run() {
 
 		try {
+			DataInputStream dis = new DataInputStream(soc.getInputStream());
+				String s = dis.readUTF();
 			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
 			
 			String dadanhdau ="";
@@ -87,7 +88,14 @@ class Xuly extends Thread {
 				
 			// 	dadanhdau+=(p.x + " " + p.y + " " + s)+",";
 			// }
-			dos.writeUTF("initital;"+server.number+";,"+dadanhdau + ";" + server.cls.size());
+			if(s.equals("want to join")&&(server.players<5))
+			{
+				server.players++; 
+				dos.writeUTF("initital;"+server.number+";,"+dadanhdau + ";" + server.players);
+			}
+			else{
+				dos.writeUTF("initital;"+server.number+";,"+dadanhdau + ";" + 6);
+			}
 
 		} catch (Exception e) {
 		}
@@ -97,6 +105,7 @@ class Xuly extends Thread {
 			try {
 				DataInputStream dis = new DataInputStream(soc.getInputStream());
 				String s = dis.readUTF();
+				
 				int ix = Integer.parseInt(s.split(" ")[0]);
 				int iy = Integer.parseInt(s.split(" ")[1]);
 				int player = Integer.parseInt(s.split(" ")[2]);
